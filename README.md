@@ -6,12 +6,12 @@ Para resolver a necessidade de se ter um web.xml mapeando todos os objetos com t
 
 Para gerar o web.xml é necessário seguir os seguintes passos:
 
-1. Inicialmente passar o web.xml original por alguma formatação (evitar problema de leitura) - Recomendado a utilização do https://www.freeformatter.com/xml-formatter.html
-2. Baixar o executavel (pasta dist)
-3. Executa-lo passando os seguintes parâmetros:
-3.1. --import "caminho até o web.xml de origem"
-3.2. --export "caminho até onde o web.xml de destino deve ser gerado"
-3.3. --sistema "nome do sistema"
+- Inicialmente passar o web.xml original por alguma formatação (evitar problema de leitura) - Recomendado a utilização do https://www.freeformatter.com/xml-formatter.html
+- Baixar o executavel (pasta dist)
+- Executa-lo passando os seguintes parâmetros:
+  - --import "caminho até o web.xml de origem"
+  - --export "caminho até onde o web.xml de destino deve ser gerado"
+  - --sistema "nome do sistema"
 
 Exemplo de execução
 
