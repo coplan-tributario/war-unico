@@ -22,11 +22,11 @@ Exemplo de execução
 ## Sistemas que tem definido os municipios
 
 - [ ] Administrativo
-- [ ] Aplic
-- [ ] Central
-- [ ] Contábil
+- [x] Aplic
+- [x] Central
+- [x] Contábil
 - [ ] Educação
-- [ ] Planejamento
+- [x] Planejamento
 - [ ] Protocolo
 - [ ] RH
 - [x] Tributário

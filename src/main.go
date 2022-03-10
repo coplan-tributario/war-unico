@@ -41,9 +41,18 @@ func main() {
 		}
 	}
 
-	if sistema == "transparencia" {
+	switch sistema {
+	case "transparencia":
 		municipios = sis.RetornaMunicipiosTransparencia()
-	} else {
+	case "aplic":
+		municipios = sis.RetornaMunicipiosAplic()
+	case "central":
+		municipios = sis.RetornaMunicipiosCentral()
+	case "contabil":
+		municipios = sis.RetornaMunicipiosContabil()
+	case "planejamento":
+		municipios = sis.RetornaMunicipiosPlanejamento()
+	default:
 		municipios = sis.RetornaMunicipiosTributario()
 	}
 
