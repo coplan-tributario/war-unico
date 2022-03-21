@@ -1,6 +1,7 @@
 package warunico
 
 import (
+	"bytes"
 	"encoding/xml"
 	"io/ioutil"
 	"os"
@@ -8,17 +9,12 @@ import (
 )
 
 type WebApp struct {
-	XMLName        xml.Name      `xml:"web-app"`
-	Text           string        `xml:",chardata"`
-	Xmlns          string        `xml:"xmlns,attr"`
-	Xsi            string        `xml:"xsi,attr"`
-	SchemaLocation string        `xml:"schemaLocation,attr"`
-	Version        string        `xml:"version,attr"`
-	DisplayName    string        `xml:"display-name"`
-	Description    string        `xml:"description"`
-	Servlets       []Servlet     `xml:"servlet"`
-	ServletsMap    []ServletMap  `xml:"servlet-mapping"`
-	SessionConfig  SessionConfig `xml:"session-config"`
+	XMLName       xml.Name      `xml:"web-app"`
+	DisplayName   string        `xml:"display-name"`
+	Description   string        `xml:"description"`
+	Servlets      []Servlet     `xml:"servlet"`
+	ServletsMap   []ServletMap  `xml:"servlet-mapping"`
+	SessionConfig SessionConfig `xml:"session-config"`
 }
 
 type Servlet struct {
@@ -115,5 +111,12 @@ func ConverteXml(path_web_xml_import string, path_web_xml_export string, municip
 
 	file, _ := xml.MarshalIndent(webApp, "", " ")
 
-	_ = ioutil.WriteFile(path_web_xml_export, file, 0644)
+	// Before create a new file, is necessary replace the first tag
+	const tag_to_replace = "<web-app>"
+	const tag_with_all_information = `<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">`
+
+	output := bytes.Replace(file, []byte(tag_to_replace), []byte(tag_with_all_information), -1)
+
+	_ = ioutil.WriteFile(path_web_xml_export, output, 0644)
 }
