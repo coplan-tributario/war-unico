@@ -15,6 +15,7 @@ type WebApp struct {
 	Servlets      []Servlet     `xml:"servlet"`
 	ServletsMap   []ServletMap  `xml:"servlet-mapping"`
 	SessionConfig SessionConfig `xml:"session-config"`
+	Errors        []Error       `xml:"error-page"`
 }
 
 type Servlet struct {
@@ -42,7 +43,13 @@ type SessionConfig struct {
 	SessionTimeout string   `xml:"session-timeout"`
 }
 
-func ConverteXml(path_web_xml_import string, path_web_xml_export string, municipios []string) {
+type Error struct {
+	XMLName   xml.Name `xml:"error-page"`
+	ErrorCode string   `xml:"error-code"`
+	Location  string   `xml:"location"`
+}
+
+func ConverteXml(servlet string, path_web_xml_import string, path_web_xml_export string, municipios []string) {
 	// Abre o arquivo XML
 	xmlFile, err := os.Open(path_web_xml_import)
 	if err != nil {
@@ -73,6 +80,16 @@ func ConverteXml(path_web_xml_import string, path_web_xml_export string, municip
 			}
 
 			webApp.ServletsMap = append(webApp.ServletsMap, sm)
+		}
+	}
+
+	if servlet == "remover" {
+		for i := len(webApp.ServletsMap) - 1; i >= 0; i-- {
+			servletMap := webApp.ServletsMap[i]
+
+			if strings.Contains(servletMap.UrlPattern, "/servlet/") && servletMap.UrlPattern != "/servlet/Kaptcha.jpg" {
+				webApp.ServletsMap = RemoveServletMap(webApp.ServletsMap, i)
+			}
 		}
 	}
 
@@ -119,4 +136,11 @@ func ConverteXml(path_web_xml_import string, path_web_xml_export string, municip
 	output := bytes.Replace(file, []byte(tag_to_replace), []byte(tag_with_all_information), -1)
 
 	_ = ioutil.WriteFile(path_web_xml_export, output, 0644)
+}
+
+func RemoveServletMap(s []ServletMap, index int) []ServletMap {
+	ret := make([]ServletMap, 0)
+	ret = append(ret, s[:index]...)
+
+	return append(ret, s[index+1:]...)
 }

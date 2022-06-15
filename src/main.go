@@ -16,13 +16,14 @@ func main() {
 	var path_web_xml_import string = "../import/web.xml"
 	var path_web_xml_export string = "../export/web_new.xml"
 	var sistema string = "tributario"
+	var servlet string = "incluir"
 	var municipios []string
 
 	args := os.Args[1:]
 
 	// Check if all parameters have been informed
 	for _, arg := range args {
-		if arg == "--import" || arg == "--export" || arg == "--sistema" {
+		if arg == "--import" || arg == "--export" || arg == "--sistema" || arg == "--servlet" {
 			state, err = setState(state, arg)
 
 			if err != nil {
@@ -35,6 +36,8 @@ func main() {
 				path_web_xml_export = arg
 			} else if state == "--sistema" {
 				sistema = arg
+			} else if state == "--servlet" {
+				servlet = arg
 			}
 
 			state = ""
@@ -57,7 +60,7 @@ func main() {
 	}
 
 	// Cria no novo web.xml
-	war.ConverteXml(path_web_xml_import, path_web_xml_export, municipios)
+	war.ConverteXml(servlet, path_web_xml_import, path_web_xml_export, municipios)
 }
 
 func setState(state, newState string) (string, error) {
