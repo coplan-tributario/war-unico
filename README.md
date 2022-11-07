@@ -12,11 +12,12 @@ Para gerar o web.xml é necessário seguir os seguintes passos:
   - --import "caminho até o web.xml de origem"
   - --export "caminho até onde o web.xml de destino deve ser gerado"
   - --sistema "nome do sistema"
+  - --path "caminho do arquivo com os municipios, neste arquivo cada municipio deve vim em uma linha e a separação será a quebra de linha"
 
 Exemplo de execução
 
 ```sh
-.\warunico.exe --import C:\war\web.xml --export C:\war\web_new.xml --sistema transparencia
+.\warunico.exe --import C:\war\web.xml --export C:\war\web_new.xml --sistema transparencia --path C:\war\municipios.txt
 ```
 
 ## Sistemas que tem definido os municipios
